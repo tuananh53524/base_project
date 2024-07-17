@@ -12,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'simple.acl' => \App\Http\Middleware\SimpleACL::class,
+            // 'HtmlMinifier' => \App\Http\Middleware\HtmlMinifier::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
