@@ -12,4 +12,9 @@ Route::group(['prefix' => 'admin','middleware' => 'simple.acl'], function () {
 
     // users
     Route::resource('users', UserController::class);
+
+    // media
+    Route::get('media/index', [\App\Http\Controllers\Admin\MediaController::class, 'index'])->name('media.index');
+    Route::get('media/crop', [\App\Http\Controllers\Admin\MediaController::class, 'crop'])->name('media.crop');
+    Route::post('media/store', [\App\Http\Controllers\Admin\MediaController::class, 'store'])->name('media.upload');
 });

@@ -44,7 +44,8 @@
                     <p>{{ Auth::user()->email }}</p>
                 </div>
                 <div class="img-box">
-                    <img src="/images/user-profile-icon.webp" alt="some user image">
+                    <img src="{{ Auth::user()->avatar && Storage::disk('public')->exists(Auth::user()->avatar) ? Storage::disk('public')->url(Auth::user()->avatar) : '/images/user-profile-icon.webp' }}"
+                        alt="some user image">
                 </div>
             </div>
             <div class="menu">
@@ -70,7 +71,8 @@
                 <div class="position-sticky mt-3">
                     <ul class="nav flex-column gap-2">
                         <li class="nav-item">
-                            <a class="nav-link {{ url()->current() == route('admin') ? 'active' : ''}}" aria-current="page" href="/admin">
+                            <a class="nav-link {{ url()->current() == route('admin') ? 'active' : '' }}"
+                                aria-current="page" href="/admin">
                                 <i class="fa-solid fa-sliders"></i> Dashboard
                             </a>
                         </li>

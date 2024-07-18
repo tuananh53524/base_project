@@ -242,7 +242,6 @@ var admin = {
     },
 
     showCropPopup: function (image, inputID, title) {
-        //var imagePreviewSrc = document.getElementById('image-preview').src;
         var imagePreviewSrc = $("#" + inputID).parent().find('img').attr('src');
 
         if (imagePreviewSrc.indexOf("default.jpg") == -1) {
@@ -410,146 +409,146 @@ var admin = {
         this.submit();
     },
 
-    initTinyMCE: function (selector) {
-        tinyMCE.init({
-            selector: selector,
-            menubar: false,
-            relative_urls: true,
-            document_base_url: settings.baseUrl,
-            theme: 'silver',
-            forced_root_block: 'p',
-            //width: 900,
-            content_style: 'img {max-width: 600px;}',
-            table_default_styles: {},
-            table_default_attributes: { class: 'table table-bordered table-striped' },
-            height: 600,
-            plugins: [
-                'advlist autolink link lists charmap print preview hr anchor pagebreak spellchecker',
-                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-                'save table directionality emoticons template paste autosave image'
-            ],
-            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | fontselect |  fontsizeselect | bullist numlist outdent indent | preview fullpage | forecolor backcolor emoticons charmap | restoredraft link code table fullscreen | shortCode openMediaPopupButton uploadImageButton uploadMediaButton embedYoutube',
-            paste_data_images: true,
-            autosave_ask_before_unload: false,
-            autosave_restore_when_empty: false,
-            allow_script_urls: true,
-            entity_encoding: 'raw',
-            image_caption: true,
-            valid_elements : '*[*]',
-            setup: function (editor) {
-                editor.ui.registry.addButton('shortCode', {
-                    text: 'Shortcode',
-                    onAction: function (_) {
-                        let shortCode = prompt('Nhập mã shortcode các bài viết [post=p-xx, l-xx, c-xx] với xx là mã shortcode, "p" tương ứng "bài viết", "l" tương ứng "landingpage", "c" tương ứng "danh mục"');
-                        if (shortCode != null) {
-                            if (shortCode.length > 0) {
-                                editor.insertContent('<div class="short-code-block">[post=' + shortCode + ']</div>');
-                            }
-                        }
-                        return false;
-                    }
-                });
+    // initTinyMCE: function (selector) {
+    //     tinyMCE.init({
+    //         selector: selector,
+    //         menubar: false,
+    //         relative_urls: true,
+    //         document_base_url: settings.baseUrl,
+    //         theme: 'silver',
+    //         forced_root_block: 'p',
+    //         //width: 900,
+    //         content_style: 'img {max-width: 600px;}',
+    //         table_default_styles: {},
+    //         table_default_attributes: { class: 'table table-bordered table-striped' },
+    //         height: 600,
+    //         plugins: [
+    //             'advlist autolink link lists charmap print preview hr anchor pagebreak spellchecker',
+    //             'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+    //             'save table directionality emoticons template paste autosave image'
+    //         ],
+    //         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | fontselect |  fontsizeselect | bullist numlist outdent indent | preview fullpage | forecolor backcolor emoticons charmap | restoredraft link code table fullscreen | shortCode openMediaPopupButton uploadImageButton uploadMediaButton embedYoutube',
+    //         paste_data_images: true,
+    //         autosave_ask_before_unload: false,
+    //         autosave_restore_when_empty: false,
+    //         allow_script_urls: true,
+    //         entity_encoding: 'raw',
+    //         image_caption: true,
+    //         valid_elements : '*[*]',
+    //         setup: function (editor) {
+    //             editor.ui.registry.addButton('shortCode', {
+    //                 text: 'Shortcode',
+    //                 onAction: function (_) {
+    //                     let shortCode = prompt('Nhập mã shortcode các bài viết [post=p-xx, l-xx, c-xx] với xx là mã shortcode, "p" tương ứng "bài viết", "l" tương ứng "landingpage", "c" tương ứng "danh mục"');
+    //                     if (shortCode != null) {
+    //                         if (shortCode.length > 0) {
+    //                             editor.insertContent('<div class="short-code-block">[post=' + shortCode + ']</div>');
+    //                         }
+    //                     }
+    //                     return false;
+    //                 }
+    //             });
 
-                editor.ui.registry.addButton('openMediaPopupButton', {
-                    text: 'Album',
-                    onAction: function (_) {
-                        //window.cms_tinyMCE = tinyMCE;
-                        tinyMCE.activeEditor = editor;
-                        window.isTinymce = true;
-                        admin.mediaIndex(null, null, false, true);
-                        return true;
-                    }
-                });
+    //             editor.ui.registry.addButton('openMediaPopupButton', {
+    //                 text: 'Album',
+    //                 onAction: function (_) {
+    //                     //window.cms_tinyMCE = tinyMCE;
+    //                     tinyMCE.activeEditor = editor;
+    //                     window.isTinymce = true;
+    //                     admin.mediaIndex(null, null, false, true);
+    //                     return true;
+    //                 }
+    //             });
 
-                editor.ui.registry.addButton('uploadImageButton', {
-                    text: 'Insert image',
-                    onAction: function (_) {
-                        tinyMCE.activeEditor = editor;
-                        tinyMCE.activeEditor.focus();
-                        window.isTinymce = true;
-                        uploader.trigger('tinymce-content', true);
-                        return true;
-                    }
-                });
+    //             editor.ui.registry.addButton('uploadImageButton', {
+    //                 text: 'Insert image',
+    //                 onAction: function (_) {
+    //                     tinyMCE.activeEditor = editor;
+    //                     tinyMCE.activeEditor.focus();
+    //                     window.isTinymce = true;
+    //                     uploader.trigger('tinymce-content', true);
+    //                     return true;
+    //                 }
+    //             });
 
-                editor.ui.registry.addButton('uploadMediaButton', {
-                    text: 'Insert audio/video',
-                    onAction: function (_) {
-                        tinyMCE.activeEditor = editor;
-                        tinyMCE.activeEditor.focus()
-                        window.isTinymce = true;
-                        uploader.trigger('tinymce-content', true, null, 'media');
-                        return true;
-                    }
-                });
+    //             editor.ui.registry.addButton('uploadMediaButton', {
+    //                 text: 'Insert audio/video',
+    //                 onAction: function (_) {
+    //                     tinyMCE.activeEditor = editor;
+    //                     tinyMCE.activeEditor.focus()
+    //                     window.isTinymce = true;
+    //                     uploader.trigger('tinymce-content', true, null, 'media');
+    //                     return true;
+    //                 }
+    //             });
 
-                editor.ui.registry.addButton('embedYoutube', {
-                    text: 'Youtube',
-                    onAction: function (_) {
-                        tinyMCE.activeEditor = editor;
-                        window.isTinymce = true;
-                        var dialogConfig = {
-                            title: 'Embed Youtube',
-                            body: {
-                                type: 'panel',
-                                items: [
-                                    {
-                                        type: 'input',
-                                        name: 'url',
-                                        label: 'Youtube link: '
-                                    },
-                                    {
-                                        type: 'input',
-                                        name: 'description',
-                                        label: 'Description: '
-                                    }
-                                ]
-                            },
-                            buttons: [
-                                {
-                                    type: 'cancel',
-                                    name: 'closeButton',
-                                    text: 'Hủy'
-                                },
-                                {
-                                    type: 'submit',
-                                    name: 'submitButton',
-                                    text: 'Insert embed code',
-                                    primary: true
-                                }
-                            ],
-                            onSubmit: function (api) {
-                                var data = api.getData();
-                                var url = data.url;
-                                var description = data.description;
-                                var youtubeVdieoID = admin.getYoutubeVideoID(url);
-                                if (youtubeVdieoID !== '') {
-                                    iframe = '<iframe class="mw-100" type="text/html"  width="560" height="315" src="https://www.youtube.com/embed/' + youtubeVdieoID + '?autoplay=1" frameborder="0"></iframe>';
-                                    var insertHTML = '';
-                                    insertHTML += '<div class="text-center">';
-                                    insertHTML += ' <figure class="d-inline-block text-center w-100">';
-                                    insertHTML += iframe;
-                                    if ((description != '')) {
-                                        insertHTML += '     <figcaption class="d-block text-center bg-light text-primary">' + description + '</figcaption>';
-                                    }
-                                    insertHTML += ' </figure>';
-                                    insertHTML += '</div><p></p>';
-                                    tinymce.activeEditor.execCommand('mceInsertContent', false, insertHTML);
-                                }
-                                api.close();
-                            }
-                        };
+    //             editor.ui.registry.addButton('embedYoutube', {
+    //                 text: 'Youtube',
+    //                 onAction: function (_) {
+    //                     tinyMCE.activeEditor = editor;
+    //                     window.isTinymce = true;
+    //                     var dialogConfig = {
+    //                         title: 'Embed Youtube',
+    //                         body: {
+    //                             type: 'panel',
+    //                             items: [
+    //                                 {
+    //                                     type: 'input',
+    //                                     name: 'url',
+    //                                     label: 'Youtube link: '
+    //                                 },
+    //                                 {
+    //                                     type: 'input',
+    //                                     name: 'description',
+    //                                     label: 'Description: '
+    //                                 }
+    //                             ]
+    //                         },
+    //                         buttons: [
+    //                             {
+    //                                 type: 'cancel',
+    //                                 name: 'closeButton',
+    //                                 text: 'Hủy'
+    //                             },
+    //                             {
+    //                                 type: 'submit',
+    //                                 name: 'submitButton',
+    //                                 text: 'Insert embed code',
+    //                                 primary: true
+    //                             }
+    //                         ],
+    //                         onSubmit: function (api) {
+    //                             var data = api.getData();
+    //                             var url = data.url;
+    //                             var description = data.description;
+    //                             var youtubeVdieoID = admin.getYoutubeVideoID(url);
+    //                             if (youtubeVdieoID !== '') {
+    //                                 iframe = '<iframe class="mw-100" type="text/html"  width="560" height="315" src="https://www.youtube.com/embed/' + youtubeVdieoID + '?autoplay=1" frameborder="0"></iframe>';
+    //                                 var insertHTML = '';
+    //                                 insertHTML += '<div class="text-center">';
+    //                                 insertHTML += ' <figure class="d-inline-block text-center w-100">';
+    //                                 insertHTML += iframe;
+    //                                 if ((description != '')) {
+    //                                     insertHTML += '     <figcaption class="d-block text-center bg-light text-primary">' + description + '</figcaption>';
+    //                                 }
+    //                                 insertHTML += ' </figure>';
+    //                                 insertHTML += '</div><p></p>';
+    //                                 tinymce.activeEditor.execCommand('mceInsertContent', false, insertHTML);
+    //                             }
+    //                             api.close();
+    //                         }
+    //                     };
 
-                        tinymce.activeEditor.windowManager.open(dialogConfig);
-                    }
-                });
-            },
-            file_picker_callback: function (callback, value, meta) {
-                //nothing
-            },
+    //                     tinymce.activeEditor.windowManager.open(dialogConfig);
+    //                 }
+    //             });
+    //         },
+    //         file_picker_callback: function (callback, value, meta) {
+    //             //nothing
+    //         },
 
-        });
-    },
+    //     });
+    // },
 
     getYoutubeVideoID: function (url) {
         var pattern = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/g
